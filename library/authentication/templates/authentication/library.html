@@ -1,0 +1,25 @@
+{% extends 'authentication/base.html' %}
+
+{% block main %}
+    <form method="post" class="form-horizontal">{% csrf_token %}
+        <select id="single" class="form-control form-control-chosen" data-placeholder="Please select filter" name="filter">
+          <option>Book Name</option>
+            <option>Author Name</option>
+            {% if request.user.role %}
+                <option>Book id</option>
+                <option>Author id</option>
+            {% endif %}
+        </select>
+        <input type="text" name="q"/>
+        <button type="submit" class="button">Search</button>
+    </form>
+     {% if request.user.role %}
+         <div align="right"><a href="{% url 'add_book' %}" class="button">Add Book</a></div>
+     {% endif %}
+      {% for i in posts %}
+
+                <h3><a href="{{ i.get_absolute_url }}">{{ i.name }}</a></h3>
+                <span class="text">{{ i.description }}</span><br>
+                <a href="{% url 'buy_book' i.pk %}" class="button">Buy</a>
+      {% endfor %}
+{% endblock %}

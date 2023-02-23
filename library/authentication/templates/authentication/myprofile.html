@@ -1,0 +1,25 @@
+{% extends 'authentication/base.html' %}
+
+{% block main %}
+      <div class="profile" align="center"><h2>{{user.first_name}} {{ user.last_name }}</h2></div>
+<ul class="category-list">
+    {% if dct %}
+        <table>
+            <thead>
+                <th>Номер замовлення</th>
+                <th>Книга</th>
+            </thead>
+            <tbody data-link="row">
+            {% for key,value in dct.items %}
+            <tr>
+                <td>{{ key.pk}}</td>
+                <td><a href="{{ value.get_absolute_url }}">{{ value.name }}</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+         {% else %}
+            <div>Ви ще не зробили замовлень</div>
+    {% endif %}
+</ul>
+{% endblock %}

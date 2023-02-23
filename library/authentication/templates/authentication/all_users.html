@@ -1,0 +1,37 @@
+{% extends 'authentication/base.html' %}
+
+{% block main %}
+<div class="category-list">
+    <form method="post">{% csrf_token %}
+        <select id="single" class="form-control form-control-chosen" data-placeholder="Please select filter" name="filter">
+          <option>User Name</option>
+            <option>User id</option>
+        </select>
+        <input type="text" name="q"/>
+        <button type="submit" class="button">Search</button>
+    </form>
+
+    <h3>All users</h3>
+
+    <table>
+    <thead>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Middle name</th>
+        <th>Email</th>
+        <th>Number of orders</th>
+    </thead>
+    <tbody data-link="row">
+    {% for user in users %}
+        <tr>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.middle_name }}</td>
+            <td>{{ user.email }}</td>
+            <td><a href="{% url 'user' user.id %}">{{ user.count_all_orders }}</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+{% endblock %}

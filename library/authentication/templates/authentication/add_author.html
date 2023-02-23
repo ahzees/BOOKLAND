@@ -1,0 +1,21 @@
+{% extends 'authentication/base.html' %}
+
+{% block main %}
+    <div class="category-list">
+        <div align="center">
+    <h2 class="category-list">Add author to book</h2>
+    <form class="category-list" method="post">{% csrf_token %}
+    {{ form2.as_p }}
+        <button type="submit" class="button">Add!</button>
+    </form>
+        </div>
+    <h1></h1>
+        <div align="center">
+        <h2>Create author</h2>
+        <form method="post" >{% csrf_token %}
+                <div>{{ form1.as_p}}</div>
+            <div><button type="submit" class="button">Create!</button></div>
+        </form>
+            </div>
+    </div>
+{% endblock %}

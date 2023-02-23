@@ -1,0 +1,43 @@
+{% extends 'authentication/base.html' %}
+
+{% block main %}
+    <div class="category-list">
+  <h3>Reader: {{user.first_name}} {{ user.last_name }}  {{ user.middle_name }}</h3>
+  <div><h3>Orders:</h3>
+      {% if orders %}
+      <table>
+            <thead>
+                <th>Номер замовлення</th>
+                <th>Назва книги</th>
+                <th>Дата замовлення</th>
+                <th>End at</th>
+                <th>Plated end at</th>
+                <th>Видалити</th>
+            </thead>
+            <tbody data-link="row">
+
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td><a href="{{ order.book.get_absolute_url }}">{{ order.book.name }}</a></td>
+                    <td>{{ order.created_at }}</td>
+                    <td>
+                    {% if order.end_at %}
+                    {{ order.end_at }}
+                     {% else %}
+                        <a style="color: red" href="{% url 'close_order' order.pk %}">Закрити замовлення</a>
+                    {% endif %}
+                    </td>
+                    <td>{{ order.plated_end_at }}</td>
+                    <td><a href="{% url 'delete_order' order.id %}" style="color: red"> Delete order </a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+      </table>
+
+    {% else %}
+      There are no orders!
+    {% endif %}
+  </div>
+    </div>
+{% endblock %}

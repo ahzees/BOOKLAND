@@ -1,0 +1,35 @@
+{% extends 'authentication/base.html' %}
+
+{% block main %}
+
+    <h3>{{ book.name }}</h3>
+        <div class="text">{{ book.description }}</div>
+    {% if  book.year_of_publication %}
+        <p></p>
+        <div class="text"><b>Рік публікації: </b>{{ book.year_of_publication}}</div>
+    {% if book.date_of_issue_of_the_book %}
+        <p></p>
+        <div class="text"><b>Дата випуску книги: </b>{{ book.date_of_issue_of_the_book}}</div>
+    {% endif %}
+    {% endif %}
+    <div class="sklad">В наявності: {{ book.count }} </div>
+    <br>
+    <b>Автори:</b>
+    {% if authors %}
+        {% for i in authors %}
+        <div class="text">
+            <a href="{{ i.get_absolute_url }}">{{ i.name }} {{i.surname}}</a>
+        </div>
+        {% endfor %}
+    {% else %}
+
+        <div class="text">Авторів немає</div>
+    {% endif %}
+    <br>
+    <a href="{% url 'buy_book' book.pk %}"><button class="button">Buy</button></a>
+    {% if request.user.role %}
+        <h3><a href="{% url 'add_author'%}">Додати автора</a></h3>
+            Book ID: {{ book.pk }}
+            {% endif %}
+
+{% endblock %}

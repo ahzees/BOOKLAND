@@ -1,0 +1,21 @@
+
+{% extends 'authentication/base.html' %}
+
+{% block main %}
+<div class="form">
+    <h2>{{title}}</h2>
+    <form action="{% url 'login' %}"  method="POST">
+        {% csrf_token %}
+        {% for f in form %}
+        <div class="form_row">
+            <label class="form_label" for="{{ f.id_for_label }}"> {{ f.label }}: </label>{{ f }}
+            <div class="error"> {{ f.errors }}</div>
+        </div>
+        {% endfor %}
+        <button type="submit" class="button"> Login </button>
+    </form>
+<!--    {% if error %}-->
+<!--    <div class="error"> {{ error }}</div>-->
+<!--    {% endif %}-->
+</div>>
+{% endblock %}

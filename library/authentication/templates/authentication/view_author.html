@@ -1,0 +1,29 @@
+{% extends 'authentication/base.html' %}
+
+{% block main  %}
+    <h4 class="category-list">
+    {% if request.user.role %}
+     <h2>{{ author.name }} {{ author.surname }} | ID - {{ author.pk }}</h2>
+    {% else %}
+    <h2>{{ author.name }} {{ author.surname }}</h2>
+    {% endif %}
+    <h3>Книги:</h3>
+    {% if author.books.all %}
+        {% for i in author.books.all %}
+            {% if request.user.role %}
+                <div class="text"><b><a href="{{ i.get_absolute_url }}">{{ i.name }}</a></b></div>
+                <div class="sklad"> Кількість екземплярів : {{i.count}}</div>
+                <p></p>
+                {% else %}
+                <div class="text"><b><a href="{{ i.get_absolute_url }}">{{ i.name }}</a></b></div>
+                <div class="text"> {{i.description}}</div>
+                <p></p>
+
+            {% endif %}
+        {% endfor %}
+    {% else %}
+            <h4>Книг немає</h4>
+            <a href="{% url 'delete_author' author.pk %}" class="button" >Видалити Автора</a>
+    {% endif %}
+</div>
+{% endblock %}

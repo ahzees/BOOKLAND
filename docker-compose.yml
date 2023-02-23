@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - 5342:5432
+    environment:
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=postgres
+          - POSTGRES_DB=postgres
+  bookland:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000 --noreload
+    volumes:
+      - .:/library
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  migration:
+    build: .
+    image: bookland
+    command: python manage.py migrate
+    volumes:
+      - .:/code
+    links:
+      - db
+    depends_on:
+      - db

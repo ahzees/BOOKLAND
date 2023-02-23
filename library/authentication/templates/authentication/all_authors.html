@@ -1,0 +1,18 @@
+{% extends 'authentication/base.html' %}
+
+{% block main %}
+    <div>
+        <h2>Authors:</h2>
+        <form method="post">{% csrf_token %}
+              <button type="sumbit" >Show author with 0 books</button>
+        </form>
+        <div align="right"><a href="{% url 'add_author'%}" class="button">Додати автора</a></div>
+                {% for i in authors %}
+                    <h3><a href="{% url 'view_author' i.pk %}">{{ i.name }} {{ i.surname }}</a></h3>
+                    {% for k in i.books.all%}
+                       {{ k.name }}<br>
+                    {% endfor %}
+                <br>
+                {% endfor %}
+    </div>
+{% endblock %}
